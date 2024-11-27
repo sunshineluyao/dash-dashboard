@@ -1,3 +1,4 @@
+import os
 from dash import Dash, dcc, html
 import pandas as pd
 import plotly.express as px
@@ -8,6 +9,7 @@ df = pd.DataFrame({
     "Cases": [1000, 500, 700]
 })
 
+# Dash App
 app = Dash(__name__)
 
 fig = px.bar(df, x="Country", y="Cases", title="Sample Dashboard")
@@ -17,5 +19,7 @@ app.layout = html.Div(children=[
     dcc.Graph(figure=fig)
 ])
 
+# Main execution
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    port = int(os.environ.get("PORT", 8050))  # Use environment variable PORT or default to 8050
+    app.run_server(host="0.0.0.0", port=port)
